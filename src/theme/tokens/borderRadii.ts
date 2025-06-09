@@ -8,6 +8,7 @@ export const borderRadii = {
   br12: 12,
   br14: 14,
   br16: 16,
+  br18: 18,
   br20: 20,
   br24: 24,
   br30: 30,
