@@ -13,4 +13,16 @@ export interface ChatResponse {
 export interface Chat {
   message: string;
   isUser: boolean;
+  image?: string;
+}
+
+export interface ImageUploadResponse {
+  id: string;
+  name: string;
+  size: number;
+  extension: string;
+  mime_type: string;
+  created_by: string;
+  created_at: EpochTimeStamp;
+  preview_url: any;
 }

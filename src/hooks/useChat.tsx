@@ -1,6 +1,7 @@
+import * as ImagePicker from 'expo-image-picker';
 import { useState } from 'react';
 import useStore from '../store/store';
-import { Chat, ChatResponse } from '../types/chat';
+import { Chat, ChatResponse, ImageUploadResponse } from '../types/chat';
 
 const useChat = () => {
   const key = 'app-f8S4yqCkahJ9XJoruBLFyJ8q';
@@ -9,9 +10,50 @@ const useChat = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [conversationId, setConversationId] = useState<string | null>(null);
 
-  const send = async (query: string) => {
+  const uploadImage = async (
+    image: ImagePicker.ImagePickerAsset | null
+  ): Promise<ImageUploadResponse | undefined> => {
+    const formData = new FormData();
+    formData.append('file', {
+      uri: image?.uri,
+      name: 'image',
+      type: image?.mimeType,
+    } as any);
+    formData.append('user', user.id);
+
+    const res = await fetch('https://api.dify.ai/v1/files/upload', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${key}`,
+      },
+      body: formData,
+    });
+
+    try {
+      return (await res.json()) as ImageUploadResponse;
+    } catch (e) {
+      console.log('uploadImage e: ', e);
+    }
+  };
+
+  const send = async (
+    query: string,
+    image: ImagePicker.ImagePickerAsset | null
+  ) => {
     setIsLoading(true);
-    setChat((prev) => [...prev, { message: query, isUser: true }]);
+
+    setChat((prev) => [
+      ...prev,
+      { message: query, isUser: true, image: image?.uri },
+    ]);
+
+    let imageId = null;
+
+    if (image) {
+      const uploadRes = await uploadImage(image);
+      imageId = uploadRes?.id;
+    }
 
     const res = await fetch('https://api.dify.ai/v1/chat-messages', {
       method: 'POST',
@@ -24,6 +66,15 @@ const useChat = () => {
         user: user.id,
         inputs: {},
         conversationId,
+        files: imageId
+          ? [
+              {
+                type: 'image',
+                transfer_method: 'local_file',
+                upload_file_id: imageId,
+              },
+            ]
+          : [],
       }),
     });
 
@@ -42,6 +93,7 @@ const useChat = () => {
     send,
     chat,
     isLoading,
+    uploadImage,
   };
 };
 

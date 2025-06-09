@@ -1,3 +1,4 @@
+import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { ThemeProvider } from '@shopify/restyle';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
@@ -11,9 +12,11 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <StatusBar style='dark' />
-      <Stack screenOptions={{ headerShown: false }} />
-    </ThemeProvider>
+    <ActionSheetProvider>
+      <ThemeProvider theme={theme}>
+        <StatusBar style='dark' />
+        <Stack screenOptions={{ headerShown: false }} />
+      </ThemeProvider>
+    </ActionSheetProvider>
   );
 }

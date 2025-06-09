@@ -2,6 +2,7 @@ import { Chat } from '@/src/types/chat';
 import React, { useEffect, useState } from 'react';
 import { Typography } from '../..';
 import Box from '../../atoms/Box/Box';
+import Image from '../../atoms/Image/Image';
 
 interface ChatMessageProps {
   chat: Chat;
@@ -28,6 +29,16 @@ const ChatMessage = ({ chat }: ChatMessageProps) => {
 
   return (
     <Box alignItems={chat.isUser ? 'flex-end' : 'flex-start'}>
+      {chat.image && (
+        <Image
+          source={{ uri: chat.image }}
+          width={150}
+          height={150}
+          borderRadius='br16'
+          marginBottom='sp8'
+        />
+      )}
+
       <Box
         backgroundColor={chat.isUser ? 'white' : 'transparent'}
         maxWidth={chat.isUser ? '75%' : '100%'}

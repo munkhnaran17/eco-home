@@ -3,10 +3,12 @@ import {
   Button,
   Card,
   ChatMessage,
+  Image,
   TextInput,
   Typography,
 } from '@/src/components';
 import useChat from '@/src/hooks/useChat';
+import useImagePicker from '@/src/hooks/useImagePicker';
 import { Ionicons } from '@expo/vector-icons';
 import { useHeaderHeight } from '@react-navigation/elements';
 import { useIsFocused } from '@react-navigation/native';
@@ -21,7 +23,6 @@ import {
 } from 'react-native';
 import Animated, {
   Easing,
-  runOnJS,
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
@@ -51,18 +52,21 @@ const Chat = () => {
   const { send, chat, isLoading } = useChat();
   const inputRef = useRef<RNTextInput>(null);
   const [text, setText] = useState('');
+  const { image, handleImageSelection, setImage } = useImagePicker();
 
   const handleSubmit = () => {
+    if (image) {
+      setImage(null);
+    }
+
     if (text && !isLoading) {
-      console.log('text: ', text);
       Keyboard.dismiss();
-      send(text);
+      send(text, image);
       setText('');
     }
   };
 
   const scale = useSharedValue(1);
-  const [showSendButton, setShowSendButton] = useState<boolean>(false);
 
   const animatedLoaderStyle = useAnimatedStyle(() => ({
     transform: [{ scale: scale.value }],
@@ -77,25 +81,6 @@ const Chat = () => {
     borderBottomLeftRadius: borderBottomRadius.value,
     borderBottomRightRadius: borderBottomRadius.value,
   }));
-
-  const sendButtonOpacity = useSharedValue(1);
-
-  const animatedSendButtonStyle = useAnimatedStyle(() => ({
-    opacity: sendButtonOpacity.value,
-  }));
-
-  useEffect(() => {
-    if (text) {
-      setShowSendButton(true);
-      sendButtonOpacity.value = withTiming(1, { duration: 150 });
-    } else {
-      sendButtonOpacity.value = withTiming(0, { duration: 150 }, (finished) => {
-        if (finished) {
-          runOnJS(setShowSendButton)(false);
-        }
-      });
-    }
-  }, [text]);
 
   useEffect(() => {
     const toggleExpand = () => {
@@ -175,36 +160,40 @@ const Chat = () => {
                   баярлалаа.
                 </Typography>
               </Box>
-              <FlatList
-                style={{
-                  position: 'absolute',
-                  bottom: 0,
-                  paddingLeft: 16,
-                }}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                data={suggestions}
-                renderItem={({ item, index }) => (
-                  <Button
-                    width={200}
-                    alignItems='flex-start'
-                    justifyContent='flex-start'
-                    gap='sp8'
-                    marginRight='sp16'
-                    backgroundColor={
-                      index % 2 === 0 ? 'yellowSoft' : 'blueSoft'
-                    }
-                    padding='sp12'
-                    borderRadius='br16'
-                    onPress={() => send(item.question)}
-                  >
-                    <Typography fontWeight={500} fontSize={16}>
-                      {item.title}
-                    </Typography>
-                    <Typography fontSize={13}>{item.description}</Typography>
-                  </Button>
-                )}
-              />
+              {image?.uri ? (
+                <></>
+              ) : (
+                <FlatList
+                  style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    paddingLeft: 16,
+                  }}
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  data={suggestions}
+                  renderItem={({ item, index }) => (
+                    <Button
+                      width={200}
+                      alignItems='flex-start'
+                      justifyContent='flex-start'
+                      gap='sp8'
+                      marginRight='sp16'
+                      backgroundColor={
+                        index % 2 === 0 ? 'yellowSoft' : 'blueSoft'
+                      }
+                      padding='sp12'
+                      borderRadius='br16'
+                      onPress={() => send(item.question, image)}
+                    >
+                      <Typography fontWeight={500} fontSize={16}>
+                        {item.title}
+                      </Typography>
+                      <Typography fontSize={13}>{item.description}</Typography>
+                    </Button>
+                  )}
+                />
+              )}
             </Box>
           )}
           ItemSeparatorComponent={() => <Box paddingVertical='sp8' />}
@@ -227,67 +216,95 @@ const Chat = () => {
             )
           }
         />
-        <Card variant='shadow'>
-          <Animated.View
-            style={[
-              animatedInputStyle,
-              {
-                borderRadius: 24,
-                overflow: 'hidden',
-              },
-            ]}
-          >
-            <TextInput
-              value={text}
-              ref={inputRef}
-              returnKeyType='done'
-              onFocus={() => {
-                marginHorizontal.value = withTiming(0, { duration: 250 });
-                borderBottomRadius.value = withTiming(0, { duration: 250 });
-              }}
-              onBlur={() => {
-                marginHorizontal.value = withTiming(16, { duration: 250 });
-                borderBottomRadius.value = withTiming(24, { duration: 250 });
-              }}
-              onChangeText={setText}
-              onSubmitEditing={handleSubmit}
-              placeholder='Танд яаж туслах вэ?'
-              containerProps={{
-                borderRadius: 'br0',
-                suffix: (
-                  <Box flexDirection='row' gap='sp4'>
-                    {showSendButton && (
-                      <Animated.View style={animatedSendButtonStyle}>
-                        <Button
-                          disabled={isLoading || !text}
-                          backgroundColor='successSoft'
-                          borderRadius='full'
-                          width={40}
-                          height={40}
-                          onPress={handleSubmit}
-                        >
-                          <Ionicons
-                            name='send'
-                            size={20}
-                            color={colors.primary}
-                          />
-                        </Button>
-                      </Animated.View>
-                    )}
-                    <Button
-                      backgroundColor='successSoft'
-                      borderRadius='full'
-                      width={40}
-                      height={40}
-                    >
-                      <Ionicons name='image' size={20} color={colors.primary} />
-                    </Button>
-                  </Box>
-                ),
-              }}
-            />
-          </Animated.View>
-        </Card>
+        <Box>
+          {image?.uri && (
+            <Button
+              marginLeft='sp16'
+              marginBottom='sp8'
+              width={50}
+              onPress={() => setImage(null)}
+            >
+              <Image
+                source={{ uri: image.uri }}
+                width={50}
+                height={50}
+                borderRadius='br8'
+              />
+              <Box
+                position='absolute'
+                right={3}
+                top={3}
+                backgroundColor='white'
+                padding='sp2'
+                borderRadius='full'
+              >
+                <Ionicons name='close' size={12} color={colors.black} />
+              </Box>
+            </Button>
+          )}
+          <Card variant='shadow'>
+            <Animated.View
+              style={[
+                animatedInputStyle,
+                {
+                  borderRadius: 24,
+                  overflow: 'hidden',
+                },
+              ]}
+            >
+              <TextInput
+                value={text}
+                ref={inputRef}
+                returnKeyType='done'
+                onFocus={() => {
+                  marginHorizontal.value = withTiming(0, { duration: 250 });
+                  borderBottomRadius.value = withTiming(0, { duration: 250 });
+                }}
+                onBlur={() => {
+                  marginHorizontal.value = withTiming(16, { duration: 250 });
+                  borderBottomRadius.value = withTiming(24, { duration: 250 });
+                }}
+                onChangeText={setText}
+                onSubmitEditing={handleSubmit}
+                placeholder='Танд яаж туслах вэ?'
+                containerProps={{
+                  borderRadius: 'br0',
+                  suffix: (
+                    <Box flexDirection='row' gap='sp4'>
+                      <Button
+                        backgroundColor='successSoft'
+                        borderRadius='full'
+                        width={40}
+                        height={40}
+                        onPress={handleImageSelection}
+                      >
+                        <Ionicons
+                          name='image'
+                          size={20}
+                          color={colors.primary}
+                        />
+                      </Button>
+                      <Button
+                        disabled={isLoading || !text}
+                        backgroundColor='successSoft'
+                        borderRadius='full'
+                        width={40}
+                        height={40}
+                        onPress={handleSubmit}
+                      >
+                        <Ionicons
+                          name='send'
+                          size={20}
+                          color={colors.primary}
+                        />
+                      </Button>
+                    </Box>
+                  ),
+                }}
+              />
+            </Animated.View>
+          </Card>
+        </Box>
       </KeyboardAvoidingView>
     </Animated.View>
   );
