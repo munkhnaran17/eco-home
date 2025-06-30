@@ -5,6 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Box from '../../atoms/Box/Box';
 import Button from '../../atoms/Button/Button';
 import Typography from '../../atoms/Typography/Typography';
+import { router } from 'expo-router';
 
 const DashboardHeader = (props: BottomTabHeaderProps) => {
   const insets = useSafeAreaInsets();
@@ -35,6 +36,7 @@ const DashboardHeader = (props: BottomTabHeaderProps) => {
           borderRadius='full'
           flexDirection='row'
           gap='sp8'
+          onPress={() => router.navigate('/ger')}
         >
           <MaterialCommunityIcons
             name='home-lightning-bolt-outline'

@@ -1,22 +1,23 @@
 import { NavHeader, TabBar } from '@/src/components';
 import DashboardHeader from '@/src/components/organisms/DashboardHeader.tsx/DashboardHeader';
+import useStore from '@/src/store/store';
 import { Theme } from '@/src/theme/theme';
 import { Feather } from '@expo/vector-icons';
 import { useTheme } from '@shopify/restyle';
-import { Tabs } from 'expo-router';
+import { router, Tabs } from 'expo-router';
+import { useEffect } from 'react';
 
 export default function TabsLayout() {
-  // const router = useRouter();
-  // const segment = useSegments();
-  // const onboarded = false;
-
-  // useEffect(() => {
-  //   if (!onboarded && segment[0] !== 'onboarding') {
-  //     router.replace('/onboarding');
-  //   }
-  // }, []);
-
   const theme = useTheme<Theme>();
+  const { isOnboarded } = useStore();
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (!isOnboarded) {
+        router.replace('/onboarding');
+      }
+    }, 50);
+  }, []);
 
   return (
     <Tabs
@@ -44,6 +45,12 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
+        name='loyalty'
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Tabs.Screen
         name='chat'
         options={{
           title: 'Chat',
@@ -51,9 +58,9 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name='profile'
+        name='merchant'
         options={{
-          title: 'Profile',
+          headerShown: false,
         }}
       />
     </Tabs>

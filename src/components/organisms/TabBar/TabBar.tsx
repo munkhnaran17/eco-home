@@ -27,7 +27,7 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
   };
 
   useEffect(() => {
-    translateY.value = withTiming(state.index === 1 ? TAB_HEIGHT : 0, {
+    translateY.value = withTiming(state.index === 2 ? TAB_HEIGHT : 0, {
       duration: 300,
     });
 
@@ -56,6 +56,14 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
             color={isFocused ? colors.success : colors.onSurfaceDisabled}
           />
         );
+      case 'loyalty':
+        return (
+          <Feather
+            name='heart'
+            size={24}
+            color={isFocused ? colors.success : colors.onSurfaceDisabled}
+          />
+        );
       case 'chat':
         return (
           <Feather
@@ -64,10 +72,10 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
             color={isFocused ? colors.success : colors.onSurfaceDisabled}
           />
         );
-      case 'profile':
+      case 'merchant':
         return (
           <Feather
-            name='user'
+            name='globe'
             size={24}
             color={isFocused ? colors.success : colors.onSurfaceDisabled}
           />

@@ -9,6 +9,7 @@ export default function ProductsLayout() {
   return (
     <Stack
       screenOptions={{
+        gestureEnabled: true,
         contentStyle: {
           backgroundColor: colors.background,
         },
@@ -24,6 +25,13 @@ export default function ProductsLayout() {
         name='checkout'
         options={{
           header: (props) => <NavHeader />,
+        }}
+      />
+      <Stack.Screen
+        name='success'
+        options={{
+          headerShown: false,
+          gestureEnabled: false,
         }}
       />
     </Stack>

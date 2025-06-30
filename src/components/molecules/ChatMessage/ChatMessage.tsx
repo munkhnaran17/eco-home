@@ -1,8 +1,8 @@
 import { Chat } from '@/src/types/chat';
 import React, { useEffect, useState } from 'react';
-import { Typography } from '../..';
 import Box from '../../atoms/Box/Box';
 import Image from '../../atoms/Image/Image';
+import Typography from '../../atoms/Typography/Typography';
 
 interface ChatMessageProps {
   chat: Chat;
@@ -19,7 +19,7 @@ const ChatMessage = ({ chat }: ChatMessageProps) => {
       setDisplayedText(text?.slice(0, currentIndex + 1));
       currentIndex++;
 
-      if (currentIndex >= text.length) {
+      if (currentIndex >= text?.length) {
         clearInterval(typingInterval);
       }
     }, speed);
@@ -39,15 +39,19 @@ const ChatMessage = ({ chat }: ChatMessageProps) => {
         />
       )}
 
-      <Box
-        backgroundColor={chat.isUser ? 'white' : 'transparent'}
-        maxWidth={chat.isUser ? '75%' : '100%'}
-        padding={chat.isUser ? 'sp16' : 'sp0'}
-        borderRadius='br16'
-        borderBottomRightRadius='br0'
-      >
-        <Typography>{chat.isUser ? chat.message : displayedText}</Typography>
-      </Box>
+      {chat.message && (
+        <Box
+          backgroundColor={chat.isUser ? 'white' : 'transparent'}
+          maxWidth={chat.isUser ? '75%' : '100%'}
+          padding={chat.isUser ? 'sp16' : 'sp0'}
+          borderRadius='br16'
+          borderBottomRightRadius='br0'
+        >
+          <Typography fontSize={16}>
+            {chat.isUser ? chat.message : displayedText}
+          </Typography>
+        </Box>
+      )}
     </Box>
   );
 };

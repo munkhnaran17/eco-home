@@ -4,7 +4,7 @@ import Reactotron from 'reactotron-react-native';
    Reactotron
      .setAsyncStorageHandler(AsyncStorage)
      .configure({
-       name: 'EcoGer',
+       name: 'GoLeaf',
      })
      .useReactNative({
        asyncStorage: false,

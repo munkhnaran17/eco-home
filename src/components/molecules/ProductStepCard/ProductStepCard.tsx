@@ -1,10 +1,10 @@
 import useStore from '@/src/store/store';
 import { ProductData } from '@/src/types/product';
+import { FontAwesome } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React from 'react';
 import Box from '../../atoms/Box/Box';
 import Button from '../../atoms/Button/Button';
-import Image from '../../atoms/Image/Image';
 import Typography from '../../atoms/Typography/Typography';
 import ProductEcoBadge from '../ProductEcoBadge/ProductEcoBadge';
 
@@ -13,7 +13,7 @@ interface ProductStepCardProps {
 }
 
 const ProductStepCard = ({ data }: ProductStepCardProps) => {
-  const { image, name, price, effAmount, type, step, id } = data;
+  const { name, price, effAmount, type, step, id } = data;
   const {
     user: {
       rank: { step: userStep },
@@ -42,19 +42,17 @@ const ProductStepCard = ({ data }: ProductStepCardProps) => {
         height={70}
         alignItems='center'
         justifyContent='center'
-        shadowColor={isEnabled ? 'onSurfaceSoft' : 'surfaceDisabled'}
-        shadowOffset={{ width: 0, height: 4 }}
-        shadowOpacity={0.75}
-        shadowRadius={4}
-        elevation={5}
       >
-        <Image source={image} width={50} height={50} borderRadius='full' />
+        <FontAwesome name='photo' size={18} color='black' />
       </Box>
-      <Box flex={1} marginHorizontal='sp12'>
+      <Box flex={1} marginHorizontal='sp12' justifyContent='center'>
         <Typography fontWeight={500} fontSize={16} marginBottom='sp4'>
           {name}
         </Typography>
-        <Typography opacity={0.6} marginBottom='sp12'>
+        <Typography
+          opacity={0.6}
+          marginBottom={isEnabled && !isCompleted ? 'sp12' : 'sp0'}
+        >
           {price.toLocaleString()}₮
         </Typography>
         {isEnabled && !isCompleted && (

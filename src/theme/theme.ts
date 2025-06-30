@@ -52,11 +52,11 @@ const theme = createTheme({
       backgroundColor: 'primary',
     },
     neon: {
-      backgroundColor: 'successSoft',
+      backgroundColor: 'surfaceSoft',
       padding: 'sp10',
       borderRadius: 'full',
       borderWidth: 1,
-      borderColor: 'successMedium',
+      borderColor: 'surfaceSoftBorder',
     },
   },
   cardVariants: {

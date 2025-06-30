@@ -14,18 +14,27 @@ import RankCard from './molecules/RankCard/RankCard';
 import DashboardHeader from './organisms/DashboardHeader.tsx/DashboardHeader';
 import NavHeader from './organisms/NavHeader.tsx/NavHeader';
 import TabBar from './organisms/TabBar/TabBar';
+import Capitron from './svgs/Capitron';
+import Golomt from './svgs/Golomt';
+import Khan from './svgs/Khan';
+import Khas from './svgs/Khas';
 import Mature from './svgs/Mature';
 import Sapling from './svgs/Sapling';
 import Seedling from './svgs/Seedling';
+import State from './svgs/State';
 
 export {
   Box,
   Button,
+  Capitron,
   Card,
   ChatMessage,
   Content,
   DashboardHeader,
+  Golomt,
   Image,
+  Khan,
+  Khas,
   Mature,
   NavHeader,
   ProductEcoBadge,
@@ -35,6 +44,7 @@ export {
   Sapling,
   ScrollBox,
   Seedling,
+  State,
   TabBar,
   TextInput,
   Typography,

@@ -62,10 +62,10 @@ const useChat = () => {
         'Authorization': `Bearer ${key}`,
       },
       body: JSON.stringify({
-        query,
+        query: query === '' ? 'Энэ юу вэ?' : query,
         user: user.id,
         inputs: {},
-        conversationId,
+        conversation_id: conversationId,
         files: imageId
           ? [
               {
@@ -83,7 +83,15 @@ const useChat = () => {
       setConversationId(resJson.conversation_id);
       setChat((prev) => [...prev, { message: resJson.answer, isUser: false }]);
     } catch (e) {
-      console.log('chat e: ', e);
+      setChat((prev) => [
+        ...prev,
+        {
+          message: imageId
+            ? 'Зургийн хэмжээ хэтэрхий том байна. Та дахин оролдоно уу.'
+            : 'Уучлаарай, таны асуултыг танихад алдаа гарлаа. Та дахин хүсэлт илгээнэ үү.',
+          isUser: false,
+        },
+      ]);
     } finally {
       setIsLoading(false);
     }

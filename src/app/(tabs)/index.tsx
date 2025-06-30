@@ -1,5 +1,6 @@
 import { Box, ProductStepCard, RankCard, Typography } from '@/src/components';
 import useStore from '@/src/store/store';
+import { OnboardingProduct } from '@/src/types/chat';
 import { ProductEnergyType } from '@/src/types/enum-types';
 import { ProductData } from '@/src/types/product';
 import { Rank, RankType } from '@/src/types/rank';
@@ -10,64 +11,7 @@ import uuid from 'react-native-uuid';
 
 export default function Index() {
   const { id } = useLocalSearchParams<{ id?: string }>();
-  const { user, setUser } = useStore();
-
-  const productData: ProductData[] = [
-    {
-      id: 1,
-      step: 1,
-      image: require('@/assets/images/products/bio-toilet.png'),
-      name: 'Solar panel',
-      price: 3500000,
-      type: ProductEnergyType.CARBON,
-      effAmount: '-5 кг',
-    },
-    {
-      id: 2,
-      step: 2,
-      image: require('@/assets/images/products/bio-toilet.png'),
-      name: 'Био 00',
-      price: 1500000,
-      type: ProductEnergyType.ELECTRICITY,
-      effAmount: '-100кв',
-    },
-    {
-      id: 3,
-      step: 3,
-      image: require('@/assets/images/products/bio-toilet.png'),
-      name: 'Ухаалаг зуух',
-      price: 1500000,
-      type: ProductEnergyType.CARBON,
-      effAmount: '1-2тн',
-    },
-    {
-      id: 4,
-      step: 4,
-      image: require('@/assets/images/products/bio-toilet.png'),
-      name: 'Solar panel',
-      price: 1500000,
-      type: ProductEnergyType.ELECTRICITY,
-      effAmount: '-100кв',
-    },
-    {
-      id: 5,
-      step: 5,
-      image: require('@/assets/images/products/bio-toilet.png'),
-      name: 'Solar panel',
-      price: 1500000,
-      type: ProductEnergyType.ELECTRICITY,
-      effAmount: '-100кв',
-    },
-    {
-      id: 6,
-      step: 6,
-      image: require('@/assets/images/products/bio-toilet.png'),
-      name: 'Solar panel',
-      price: 1500000,
-      type: ProductEnergyType.ELECTRICITY,
-      effAmount: '-100кв',
-    },
-  ];
+  const { user, setUser, chosenPlan } = useStore();
 
   const flatListRef = useRef<FlatList>(null);
 
@@ -94,14 +38,32 @@ export default function Index() {
       onScrollToIndexFailed={() => {
         flatListRef.current?.scrollToIndex({ index: 0, animated: true });
       }}
-      keyExtractor={(item) => item.step.toString()}
+      keyExtractor={(item) => item.name + item.price}
       contentContainerStyle={{
         paddingTop: 16,
         paddingBottom: 136,
         paddingHorizontal: 24,
       }}
-      data={productData}
-      renderItem={({ item }) => <ProductStepCard data={item} />}
+      data={chosenPlan?.products}
+      renderItem={({
+        item,
+        index,
+      }: {
+        item: OnboardingProduct;
+        index: number;
+      }) => {
+        const data: ProductData = {
+          id: index,
+          step: index,
+          image: require('@/assets/images/products/bio-toilet.png'),
+          name: item.name,
+          price: item.price,
+          type: ProductEnergyType.ELECTRICITY,
+          effAmount: item.energy.toString() + 'кв',
+        };
+
+        return <ProductStepCard data={data} />;
+      }}
       ListHeaderComponent={() => (
         <Box marginBottom='sp36'>
           <RankCard rank={Rank.getRankById(RankType.NB)!} />

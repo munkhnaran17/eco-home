@@ -59,7 +59,7 @@ const Chat = () => {
       setImage(null);
     }
 
-    if (text && !isLoading) {
+    if (!isLoading) {
       Keyboard.dismiss();
       send(text, image);
       setText('');
@@ -270,7 +270,7 @@ const Chat = () => {
                 containerProps={{
                   borderRadius: 'br0',
                   suffix: (
-                    <Box flexDirection='row' gap='sp4'>
+                    <Box flexDirection='row' gap='sp12'>
                       <Button
                         backgroundColor='successSoft'
                         borderRadius='full'
@@ -285,18 +285,14 @@ const Chat = () => {
                         />
                       </Button>
                       <Button
-                        disabled={isLoading || !text}
-                        backgroundColor='successSoft'
+                        disabled={isLoading || (!text && !image)}
+                        backgroundColor='primary'
                         borderRadius='full'
                         width={40}
                         height={40}
                         onPress={handleSubmit}
                       >
-                        <Ionicons
-                          name='send'
-                          size={20}
-                          color={colors.primary}
-                        />
+                        <Ionicons name='send' size={20} color={colors.white} />
                       </Button>
                     </Box>
                   ),

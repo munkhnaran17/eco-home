@@ -31,15 +31,15 @@ export class Rank {
       id: RankType.SP,
       name: 'Solar powered',
       description: 'Reduce 20kg of CO2 to grow this tree.',
-      amount: 1000,
-      requiredStep: 4,
+      amount: 500,
+      requiredStep: 3,
     },
     {
       id: RankType.FE,
       name: 'Fully eco',
       description: 'Reduce 1500kg of CO2 to grow this tree.',
-      amount: 5000,
-      requiredStep: 7,
+      amount: 1500,
+      requiredStep: 3,
     },
   ];
 

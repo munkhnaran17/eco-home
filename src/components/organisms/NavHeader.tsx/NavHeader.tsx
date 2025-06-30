@@ -14,6 +14,7 @@ const NavHeader = ({ title }: NavHeaderProps) => {
 
   return (
     <Box
+      backgroundColor='background'
       paddingBottom='sp16'
       paddingHorizontal='sp16'
       flexDirection='row'

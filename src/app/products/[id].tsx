@@ -1,14 +1,13 @@
 import {
   Box,
   Button,
-  Image,
   ProductEcoBadge,
   ScrollBox,
   Typography,
 } from '@/src/components';
 import useStore from '@/src/store/store';
 import { ProductEnergyType } from '@/src/types/enum-types';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React from 'react';
 import { FlatList } from 'react-native';
@@ -20,21 +19,27 @@ const ProductDetail = () => {
     {
       id: 1,
       icon: (
-        <MaterialCommunityIcons name='lightning-bolt' size={16} color='black' />
+        <MaterialCommunityIcons
+          name='lightning-bolt-outline'
+          size={16}
+          color='black'
+        />
       ),
       name: 'Цахилгаан 100% хангана',
     },
     {
       id: 2,
-      icon: (
-        <MaterialCommunityIcons name='lightning-bolt' size={16} color='black' />
-      ),
+      icon: <MaterialCommunityIcons name='infinity' size={16} color='black' />,
       name: 'Удаан эдэлгээтэй',
     },
     {
       id: 3,
       icon: (
-        <MaterialCommunityIcons name='lightning-bolt' size={16} color='black' />
+        <MaterialCommunityIcons
+          name='hand-coin-outline'
+          size={16}
+          color='black'
+        />
       ),
       name: 'Зээлээр авах боломжтой',
     },
@@ -43,30 +48,24 @@ const ProductDetail = () => {
   const suppliers = [
     {
       id: 1,
-      icon: (
-        <MaterialCommunityIcons name='lightning-bolt' size={24} color='black' />
-      ),
+      icon: <FontAwesome name='photo' size={16} color='black' />,
       name: 'AU Optronics',
       description: 'C02 хамгийн бага',
-      price: '3,500,000₮',
+      price: `${product?.price.toLocaleString()}₮`,
     },
     {
       id: 2,
-      icon: (
-        <MaterialCommunityIcons name='lightning-bolt' size={24} color='black' />
-      ),
+      icon: <FontAwesome name='photo' size={16} color='black' />,
       name: 'AU Optronics',
-      description: 'C02 хамгийн бага',
-      price: '3,500,000₮',
+      description: '',
+      price: `${product?.price.toLocaleString()}₮`,
     },
     {
       id: 3,
-      icon: (
-        <MaterialCommunityIcons name='lightning-bolt' size={24} color='black' />
-      ),
+      icon: <FontAwesome name='photo' size={16} color='black' />,
       name: 'AU Optronics',
-      description: 'C02 хамгийн бага',
-      price: '3,500,000₮',
+      description: 'Хамгийн хямд',
+      price: `${product?.price.toLocaleString()}₮`,
     },
   ];
 
@@ -80,18 +79,14 @@ const ProductDetail = () => {
         alignItems='center'
         justifyContent='center'
       >
-        <Image
-          source={require('@/assets/images/products/bio-toilet.png')}
-          width={150}
-          height={150}
-        />
+        <FontAwesome name='photo' size={24} color='black' />
       </Box>
       <Box
         flexDirection='row'
         justifyContent='space-between'
         marginBottom='sp24'
       >
-        <Box gap='sp4'>
+        <Box flex={1} gap='sp4'>
           <Typography fontWeight={500} fontSize={20}>
             {product?.name}
           </Typography>
@@ -99,10 +94,12 @@ const ProductDetail = () => {
             45 reviews
           </Typography>
         </Box>
-        <ProductEcoBadge
-          type={product?.type ?? ProductEnergyType.CARBON}
-          effAmount={product?.effAmount ?? ''}
-        />
+        <Box justifyContent='center'>
+          <ProductEcoBadge
+            type={product?.type ?? ProductEnergyType.CARBON}
+            effAmount={product?.effAmount ?? ''}
+          />
+        </Box>
       </Box>
       <FlatList
         scrollEnabled={false}
@@ -155,9 +152,11 @@ const ProductDetail = () => {
               <Typography numberOfLines={1} fontSize={16}>
                 {item.name}
               </Typography>
-              <Typography numberOfLines={1} fontSize={12} opacity={0.5}>
-                {item.description}
-              </Typography>
+              {item.description && (
+                <Typography numberOfLines={1} fontSize={12} opacity={0.5}>
+                  {item.description}
+                </Typography>
+              )}
             </Box>
             <Box flexDirection='row' alignItems='center'>
               <Box

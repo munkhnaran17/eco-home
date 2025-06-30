@@ -40,7 +40,7 @@ const ProductEcoBadge = ({
           </>
         ) : (
           <MaterialCommunityIcons
-            name='lightning-bolt'
+            name='lightning-bolt-outline'
             size={14}
             color='white'
           />
