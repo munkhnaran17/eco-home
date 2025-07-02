@@ -14,10 +14,10 @@ export default function RootLayout() {
   return (
     <ActionSheetProvider>
       <ThemeProvider theme={theme}>
-        <StatusBar style='dark' />
+        <StatusBar style="dark" />
         <Stack screenOptions={{ headerShown: false, gestureEnabled: false }}>
           <Stack.Screen
-            name='ger'
+            name="ger"
             options={{
               headerShown: true,
               gestureEnabled: true,

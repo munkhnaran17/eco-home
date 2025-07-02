@@ -1,23 +1,12 @@
 import { NavHeader, TabBar } from '@/src/components';
 import DashboardHeader from '@/src/components/organisms/DashboardHeader.tsx/DashboardHeader';
-import useStore from '@/src/store/store';
 import { Theme } from '@/src/theme/theme';
 import { Feather } from '@expo/vector-icons';
 import { useTheme } from '@shopify/restyle';
-import { router, Tabs } from 'expo-router';
-import { useEffect } from 'react';
+import { Tabs } from 'expo-router';
 
 export default function TabsLayout() {
   const theme = useTheme<Theme>();
-  const { isOnboarded } = useStore();
-
-  useEffect(() => {
-    setTimeout(() => {
-      if (!isOnboarded) {
-        router.replace('/onboarding');
-      }
-    }, 50);
-  }, []);
 
   return (
     <Tabs
@@ -35,30 +24,30 @@ export default function TabsLayout() {
       }}
     >
       <Tabs.Screen
-        name='index'
+        name="index"
         options={{
           title: 'Dashboard',
           header: (props) => <DashboardHeader {...props} />,
           tabBarIcon: ({ color }) => (
-            <Feather size={28} name='home' color={color} />
+            <Feather size={28} name="home" color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name='loyalty'
+        name="loyalty"
         options={{
           headerShown: false,
         }}
       />
       <Tabs.Screen
-        name='chat'
+        name="chat"
         options={{
           title: 'Chat',
           header: (props) => <NavHeader />,
         }}
       />
       <Tabs.Screen
-        name='merchant'
+        name="merchant"
         options={{
           headerShown: false,
         }}

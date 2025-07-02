@@ -36,7 +36,7 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
         duration: 200,
       });
     }
-  }, [state.index, tabPositions]);
+  }, [state.index, tabPositions, translateX, translateY]);
 
   const animatedIndicatorStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: translateX.value }],
@@ -51,7 +51,7 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
       case 'index':
         return (
           <Feather
-            name='home'
+            name="home"
             size={24}
             color={isFocused ? colors.success : colors.onSurfaceDisabled}
           />
@@ -59,7 +59,7 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
       case 'loyalty':
         return (
           <Feather
-            name='heart'
+            name="heart"
             size={24}
             color={isFocused ? colors.success : colors.onSurfaceDisabled}
           />
@@ -67,7 +67,7 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
       case 'chat':
         return (
           <Feather
-            name='message-circle'
+            name="message-circle"
             size={24}
             color={isFocused ? colors.success : colors.onSurfaceDisabled}
           />
@@ -75,7 +75,7 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
       case 'merchant':
         return (
           <Feather
-            name='globe'
+            name="globe"
             size={24}
             color={isFocused ? colors.success : colors.onSurfaceDisabled}
           />
@@ -120,12 +120,12 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
           },
         ]}
       />
-      <Box flexDirection='row' justifyContent='space-evenly'>
+      <Box flexDirection="row" justifyContent="space-evenly">
         {state.routes.map((route, index) => {
           const isFocused = state.index === index;
           return (
             <Button
-              marginTop='sp24'
+              marginTop="sp24"
               key={route.key}
               width={TAB_WIDTH}
               onLayout={onTabLayout(index)}

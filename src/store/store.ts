@@ -15,7 +15,7 @@ interface StoreState {
   setChosenPlan: (chosenPlan?: OnboardingProductRecommendation) => void;
   onboardingRecommendation?: OnboardingAnswer;
   setOnboardingRecommendation: (
-    onboardingRecommendation: OnboardingAnswer
+    onboardingRecommendation: OnboardingAnswer,
   ) => void;
   isOnboarded: boolean;
   setIsOnboarded: (isOnboarded: boolean) => void;
@@ -34,7 +34,7 @@ const useStore = create<StoreState>()(
         set({ chosenPlan }),
       onboardingRecommendation: undefined,
       setOnboardingRecommendation: (
-        onboardingRecommendation: OnboardingAnswer
+        onboardingRecommendation: OnboardingAnswer,
       ) => set({ onboardingRecommendation }),
       isOnboarded: false,
       setIsOnboarded: (isOnboarded: boolean) => set({ isOnboarded }),
@@ -77,8 +77,8 @@ const useStore = create<StoreState>()(
     {
       name: 'my-app-storage',
       storage: createJSONStorage(() => asyncStorage),
-    }
-  )
+    },
+  ),
 );
 
 export default useStore;

@@ -48,45 +48,46 @@ const BaseTextInput = createRestyleComponent<Props, Theme>(
     border,
     createVariant({ themeKey: 'textInputVariants' }),
   ],
-  View
+  View,
 );
 
-const TextInput = forwardRef(
-  ({ containerProps, ...inputProps }: InputProps, ref) => {
-    return (
-      <BaseTextInput {...containerProps}>
-        <Box
+const TextInput = forwardRef(function TextInput(
+  { containerProps, ...inputProps }: InputProps,
+  ref,
+) {
+  return (
+    <BaseTextInput {...containerProps}>
+      <Box
+        flex={1}
+        flexDirection="row"
+        justifyContent="space-between"
+        alignItems="center"
+        marginVertical="sp10"
+      >
+        {containerProps?.prefix && (
+          <Box flexDirection="row" alignItems="center" marginRight="sp8">
+            {containerProps.prefix}
+          </Box>
+        )}
+
+        <Input
+          ref={ref}
+          allowFontScaling={false}
+          fontSize={16}
+          autoCapitalize="none"
           flex={1}
-          flexDirection='row'
-          justifyContent='space-between'
-          alignItems='center'
-          marginVertical='sp10'
-        >
-          {containerProps?.prefix && (
-            <Box flexDirection='row' alignItems='center' marginRight='sp8'>
-              {containerProps.prefix}
-            </Box>
-          )}
+          height="100%"
+          {...inputProps}
+        />
 
-          <Input
-            ref={ref}
-            allowFontScaling={false}
-            fontSize={16}
-            autoCapitalize='none'
-            flex={1}
-            height='100%'
-            {...inputProps}
-          />
-
-          {containerProps?.suffix && (
-            <Box flexDirection='row' alignItems='center' marginLeft='sp8'>
-              {containerProps.suffix}
-            </Box>
-          )}
-        </Box>
-      </BaseTextInput>
-    );
-  }
-);
+        {containerProps?.suffix && (
+          <Box flexDirection="row" alignItems="center" marginLeft="sp8">
+            {containerProps.suffix}
+          </Box>
+        )}
+      </Box>
+    </BaseTextInput>
+  );
+});
 
 export default TextInput;

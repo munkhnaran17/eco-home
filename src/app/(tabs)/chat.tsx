@@ -90,12 +90,12 @@ const Chat = () => {
           easing: Easing.inOut(Easing.ease),
         }),
         -1,
-        true
+        true,
       );
     };
 
     toggleExpand();
-  }, []);
+  }, [scale]);
 
   useEffect(() => {
     marginBottom.value = withTiming(isFocused ? 40 : 0, {
@@ -105,7 +105,7 @@ const Chat = () => {
     if (!isFocused) {
       Keyboard.dismiss();
     }
-  }, [isFocused]);
+  }, [isFocused, marginBottom]);
 
   return (
     <Animated.View
@@ -133,29 +133,29 @@ const Chat = () => {
             paddingHorizontal: chat.length > 0 ? 16 : 0,
           }}
           ListEmptyComponent={() => (
-            <Box flex={1} alignItems='center' justifyContent='space-between'>
+            <Box flex={1} alignItems="center" justifyContent="space-between">
               <Box
-                height='50%'
-                gap='sp4'
-                alignItems='center'
-                paddingHorizontal='sp24'
-                justifyContent='flex-end'
+                height="50%"
+                gap="sp4"
+                alignItems="center"
+                paddingHorizontal="sp24"
+                justifyContent="flex-end"
               >
                 <Box
-                  backgroundColor='onSurfaceSoft'
-                  borderRadius='full'
+                  backgroundColor="onSurfaceSoft"
+                  borderRadius="full"
                   width={56}
                   height={56}
-                  alignItems='center'
-                  justifyContent='center'
-                  marginBottom='sp16'
+                  alignItems="center"
+                  justifyContent="center"
+                  marginBottom="sp16"
                 >
-                  <Ionicons size={28} name='leaf' color='white' />
+                  <Ionicons size={28} name="leaf" color="white" />
                 </Box>
-                <Typography fontSize={24} fontWeight={500} textAlign='center'>
+                <Typography fontSize={24} fontWeight={500} textAlign="center">
                   GoLeaf
                 </Typography>
-                <Typography textAlign='center'>
+                <Typography textAlign="center">
                   Өөрсдийн ирээдүйд хөрөнгө оруулж буй түүчээлэгч иргэн танд
                   баярлалаа.
                 </Typography>
@@ -175,15 +175,15 @@ const Chat = () => {
                   renderItem={({ item, index }) => (
                     <Button
                       width={200}
-                      alignItems='flex-start'
-                      justifyContent='flex-start'
-                      gap='sp8'
-                      marginRight='sp16'
+                      alignItems="flex-start"
+                      justifyContent="flex-start"
+                      gap="sp8"
+                      marginRight="sp16"
                       backgroundColor={
                         index % 2 === 0 ? 'yellowSoft' : 'blueSoft'
                       }
-                      padding='sp12'
-                      borderRadius='br16'
+                      padding="sp12"
+                      borderRadius="br16"
                       onPress={() => send(item.question, image)}
                     >
                       <Typography fontWeight={500} fontSize={16}>
@@ -196,7 +196,7 @@ const Chat = () => {
               )}
             </Box>
           )}
-          ItemSeparatorComponent={() => <Box paddingVertical='sp8' />}
+          ItemSeparatorComponent={() => <Box paddingVertical="sp8" />}
           renderItem={({ item }) => <ChatMessage chat={item} />}
           ListFooterComponent={() =>
             isLoading && (
@@ -219,8 +219,8 @@ const Chat = () => {
         <Box>
           {image?.uri && (
             <Button
-              marginLeft='sp16'
-              marginBottom='sp8'
+              marginLeft="sp16"
+              marginBottom="sp8"
               width={50}
               onPress={() => setImage(null)}
             >
@@ -228,21 +228,21 @@ const Chat = () => {
                 source={{ uri: image.uri }}
                 width={50}
                 height={50}
-                borderRadius='br8'
+                borderRadius="br8"
               />
               <Box
-                position='absolute'
+                position="absolute"
                 right={3}
                 top={3}
-                backgroundColor='white'
-                padding='sp2'
-                borderRadius='full'
+                backgroundColor="white"
+                padding="sp2"
+                borderRadius="full"
               >
-                <Ionicons name='close' size={12} color={colors.black} />
+                <Ionicons name="close" size={12} color={colors.black} />
               </Box>
             </Button>
           )}
-          <Card variant='shadow'>
+          <Card variant="shadow">
             <Animated.View
               style={[
                 animatedInputStyle,
@@ -255,44 +255,52 @@ const Chat = () => {
               <TextInput
                 value={text}
                 ref={inputRef}
-                returnKeyType='done'
+                returnKeyType="done"
                 onFocus={() => {
-                  marginHorizontal.value = withTiming(0, { duration: 250 });
-                  borderBottomRadius.value = withTiming(0, { duration: 250 });
+                  marginHorizontal.value = withTiming(0, {
+                    duration: 250,
+                  });
+                  borderBottomRadius.value = withTiming(0, {
+                    duration: 250,
+                  });
                 }}
                 onBlur={() => {
-                  marginHorizontal.value = withTiming(16, { duration: 250 });
-                  borderBottomRadius.value = withTiming(24, { duration: 250 });
+                  marginHorizontal.value = withTiming(16, {
+                    duration: 250,
+                  });
+                  borderBottomRadius.value = withTiming(24, {
+                    duration: 250,
+                  });
                 }}
                 onChangeText={setText}
                 onSubmitEditing={handleSubmit}
-                placeholder='Танд яаж туслах вэ?'
+                placeholder="Танд яаж туслах вэ?"
                 containerProps={{
                   borderRadius: 'br0',
                   suffix: (
-                    <Box flexDirection='row' gap='sp12'>
+                    <Box flexDirection="row" gap="sp12">
                       <Button
-                        backgroundColor='successSoft'
-                        borderRadius='full'
+                        backgroundColor="successSoft"
+                        borderRadius="full"
                         width={40}
                         height={40}
                         onPress={handleImageSelection}
                       >
                         <Ionicons
-                          name='image'
+                          name="image"
                           size={20}
                           color={colors.primary}
                         />
                       </Button>
                       <Button
                         disabled={isLoading || (!text && !image)}
-                        backgroundColor='primary'
-                        borderRadius='full'
+                        backgroundColor="primary"
+                        borderRadius="full"
                         width={40}
                         height={40}
                         onPress={handleSubmit}
                       >
-                        <Ionicons name='send' size={20} color={colors.white} />
+                        <Ionicons name="send" size={20} color={colors.white} />
                       </Button>
                     </Box>
                   ),

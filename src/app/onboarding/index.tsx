@@ -48,7 +48,7 @@ export default function Onboarding() {
 
   const procEnd = async (
     inputs: OnboardingPersonalInputs,
-    isBusiness: boolean
+    isBusiness: boolean,
   ) => {
     setData((prev) => {
       const updatedPrev = prev.map((item) => {
@@ -101,7 +101,7 @@ export default function Onboarding() {
 
   const procIncome = (
     inputs: OnboardingPersonalInputs,
-    isBusiness: boolean
+    isBusiness: boolean,
   ) => {
     setData((prev) => {
       const updatedPrev = prev.map((item) => {
@@ -131,7 +131,7 @@ export default function Onboarding() {
                     salary_income: !isBusiness ? '1,000,000-2,000,000' : '0',
                     business_income: isBusiness ? '1,000,000-2,000,000' : '0',
                   },
-                  isBusiness
+                  isBusiness,
                 ),
             },
             {
@@ -143,7 +143,7 @@ export default function Onboarding() {
                     salary_income: !isBusiness ? '2,000,000-4,000,000' : '0',
                     business_income: isBusiness ? '2,000,000-4,000,000' : '0',
                   },
-                  isBusiness
+                  isBusiness,
                 ),
             },
             {
@@ -155,7 +155,7 @@ export default function Onboarding() {
                     salary_income: !isBusiness ? '5,000,000+' : '0',
                     business_income: isBusiness ? '5,000,000+' : '0',
                   },
-                  isBusiness
+                  isBusiness,
                 ),
             },
           ],
@@ -345,7 +345,7 @@ export default function Onboarding() {
           id: 4,
           selected: false,
           description:
-            inputs.houseType == 'Гэр'
+            inputs.houseType === 'Гэр'
               ? 'Хэдэн онд сүүлд дулаалгын материалаа сольсон бэ?'
               : 'Хэдэн онд баригдсан бэ?',
           options: [
@@ -382,38 +382,41 @@ export default function Onboarding() {
           id: 3,
           selected: false,
           description:
-            inputs.houseType == 'Гэр' ? 'Хэдэн ханатай вэ?' : 'Хэдэн мкв вэ?',
+            inputs.houseType === 'Гэр' ? 'Хэдэн ханатай вэ?' : 'Хэдэн мкв вэ?',
           options: [
             {
-              title: inputs.houseType == 'Гэр' ? '4 хана' : '30-50 мкв',
+              title: inputs.houseType === 'Гэр' ? '4 хана' : '30-50 мкв',
               onPress: () =>
                 procSize({
                   ...inputs,
-                  houseSize: inputs.houseType == 'Гэр' ? '4 хана' : '30-50 мкв',
+                  houseSize:
+                    inputs.houseType === 'Гэр' ? '4 хана' : '30-50 мкв',
                 }),
             },
             {
-              title: inputs.houseType == 'Гэр' ? '5 хана' : '50-70 мкв',
+              title: inputs.houseType === 'Гэр' ? '5 хана' : '50-70 мкв',
               onPress: () =>
                 procSize({
                   ...inputs,
-                  houseSize: inputs.houseType == 'Гэр' ? '5 хана' : '50-70 мкв',
+                  houseSize:
+                    inputs.houseType === 'Гэр' ? '5 хана' : '50-70 мкв',
                 }),
             },
             {
-              title: inputs.houseType == 'Гэр' ? '6 хана' : '70-90 мкв',
+              title: inputs.houseType === 'Гэр' ? '6 хана' : '70-90 мкв',
               onPress: () =>
                 procSize({
                   ...inputs,
-                  houseSize: inputs.houseType == 'Гэр' ? '6 хана' : '70-90 мкв',
+                  houseSize:
+                    inputs.houseType === 'Гэр' ? '6 хана' : '70-90 мкв',
                 }),
             },
             {
-              title: inputs.houseType == 'Гэр' ? '6+ хана' : '99+ мкв',
+              title: inputs.houseType === 'Гэр' ? '6+ хана' : '99+ мкв',
               onPress: () =>
                 procSize({
                   ...inputs,
-                  houseSize: inputs.houseType == 'Гэр' ? '6+ хана' : '99+ мкв',
+                  houseSize: inputs.houseType === 'Гэр' ? '6+ хана' : '99+ мкв',
                 }),
             },
           ],
@@ -510,15 +513,15 @@ export default function Onboarding() {
     return (
       <Box
         flex={1}
-        alignItems='center'
-        justifyContent='center'
-        paddingHorizontal='sp24'
-        gap='sp4'
+        alignItems="center"
+        justifyContent="center"
+        paddingHorizontal="sp24"
+        gap="sp4"
       >
         <LottieView
           autoPlay
           loop
-          resizeMode='cover'
+          resizeMode="cover"
           style={{ width: 100, height: 100 }}
           source={require('@/assets/animations/loading.json')}
         />
@@ -526,7 +529,7 @@ export default function Onboarding() {
         <Typography fontWeight={600} fontSize={18}>
           Хэдхэн хором...
         </Typography>
-        <Typography textAlign='center' fontSize={16}>
+        <Typography textAlign="center" fontSize={16}>
           LED гэрэл уламжлалт гэрлээс 80% бага эрчим хүч хэрэглэдэг гэдгийг
           мэдэх үү?
         </Typography>
@@ -537,8 +540,8 @@ export default function Onboarding() {
   return (
     <Box
       flex={1}
-      paddingHorizontal='sp24'
-      paddingBottom='sp40'
+      paddingHorizontal="sp24"
+      paddingBottom="sp40"
       style={{
         paddingTop: insets.top + 32,
       }}
@@ -558,23 +561,23 @@ export default function Onboarding() {
           }}
           renderItem={({ item }: { item: OnboardingData }) => {
             return (
-              <Box gap='sp16'>
-                <Typography fontSize={16} maxWidth='80%'>
+              <Box gap="sp16">
+                <Typography fontSize={16} maxWidth="80%">
                   {item.description}
                 </Typography>
-                <Box alignSelf='flex-end' gap='sp8'>
+                <Box alignSelf="flex-end" gap="sp8">
                   {item.selected ? (
                     <Button
                       disabled
                       key={item.selectedOption}
-                      backgroundColor='surfaceSoft'
-                      borderRadius='br12'
-                      paddingHorizontal='sp16'
-                      paddingVertical='sp12'
+                      backgroundColor="surfaceSoft"
+                      borderRadius="br12"
+                      paddingHorizontal="sp16"
+                      paddingVertical="sp12"
                     >
                       <Typography
-                        color='success'
-                        fontWeight='500'
+                        color="success"
+                        fontWeight="500"
                         fontSize={16}
                       >
                         {item.selectedOption}
@@ -585,15 +588,15 @@ export default function Onboarding() {
                       <Button
                         key={option.title}
                         borderWidth={1}
-                        borderColor='surfaceSoft'
-                        borderRadius='br12'
-                        paddingHorizontal='sp16'
-                        paddingVertical='sp12'
+                        borderColor="surfaceSoft"
+                        borderRadius="br12"
+                        paddingHorizontal="sp16"
+                        paddingVertical="sp12"
                         onPress={option.onPress}
                       >
                         <Typography
-                          color='success'
-                          fontWeight='500'
+                          color="success"
+                          fontWeight="500"
                           fontSize={16}
                         >
                           {option.title}
@@ -607,15 +610,15 @@ export default function Onboarding() {
           }}
           ListHeaderComponent={
             <Box
-              backgroundColor='onSurfaceSoft'
-              borderRadius='full'
+              backgroundColor="onSurfaceSoft"
+              borderRadius="full"
               width={40}
               height={40}
-              alignItems='center'
-              justifyContent='center'
-              marginBottom='sp12'
+              alignItems="center"
+              justifyContent="center"
+              marginBottom="sp12"
             >
-              <Ionicons size={20} name='leaf' color='white' />
+              <Ionicons size={20} name="leaf" color="white" />
             </Box>
           }
         />
@@ -630,39 +633,39 @@ export default function Onboarding() {
             },
           ]}
         >
-          <Box gap='sp12' alignItems='center'>
+          <Box gap="sp12" alignItems="center">
             <Box
-              backgroundColor='onSurfaceSoft'
-              borderRadius='full'
+              backgroundColor="onSurfaceSoft"
+              borderRadius="full"
               width={56}
               height={56}
-              alignItems='center'
-              justifyContent='center'
+              alignItems="center"
+              justifyContent="center"
             >
-              <Ionicons size={28} name='leaf' color='white' />
+              <Ionicons size={28} name="leaf" color="white" />
             </Box>
             <Typography fontSize={24} fontWeight={600}>
               GoLeaf
             </Typography>
           </Box>
-          <Box alignItems='center' position='absolute' bottom={0}>
+          <Box alignItems="center" position="absolute" bottom={0}>
             <Typography
-              color='black'
+              color="black"
               opacity={0.7}
               fontSize={16}
               fontWeight={500}
-              paddingHorizontal='sp24'
-              textAlign='center'
-              marginBottom='sp24'
+              paddingHorizontal="sp24"
+              textAlign="center"
+              marginBottom="sp24"
             >
               Хиймэл оюунд суурилсан ногоон шийдэлд тавтай морил
             </Typography>
             <Button
-              variant='neon'
+              variant="neon"
               width={140}
               onPress={() => toggleVisibility()}
             >
-              <Typography color='onSurfaceSoft' fontWeight='500' fontSize={16}>
+              <Typography color="onSurfaceSoft" fontWeight="500" fontSize={16}>
                 Эхлэе
               </Typography>
             </Button>

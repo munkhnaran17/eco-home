@@ -11,7 +11,7 @@ const useChat = () => {
   const [conversationId, setConversationId] = useState<string | null>(null);
 
   const uploadImage = async (
-    image: ImagePicker.ImagePickerAsset | null
+    image: ImagePicker.ImagePickerAsset | null,
   ): Promise<ImageUploadResponse | undefined> => {
     const formData = new FormData();
     formData.append('file', {
@@ -39,7 +39,7 @@ const useChat = () => {
 
   const send = async (
     query: string,
-    image: ImagePicker.ImagePickerAsset | null
+    image: ImagePicker.ImagePickerAsset | null,
   ) => {
     setIsLoading(true);
 
@@ -83,6 +83,8 @@ const useChat = () => {
       setConversationId(resJson.conversation_id);
       setChat((prev) => [...prev, { message: resJson.answer, isUser: false }]);
     } catch (e) {
+      console.log(e);
+
       setChat((prev) => [
         ...prev,
         {

@@ -1,5 +1,4 @@
-import { ImageSourcePropType } from 'react-native';
-import { ProductEnergyType } from './enum-types';
+import { ImageSourcePropType } from "react-native";
 
 export interface ProductData {
   id: number;
@@ -9,4 +8,9 @@ export interface ProductData {
   price: number;
   type: ProductEnergyType;
   effAmount: string;
+}
+
+export enum ProductEnergyType {
+  CARBON,
+  ELECTRICITY,
 }

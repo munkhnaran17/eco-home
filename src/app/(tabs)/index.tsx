@@ -1,17 +1,15 @@
 import { Box, ProductStepCard, RankCard, Typography } from '@/src/components';
 import useStore from '@/src/store/store';
 import { OnboardingProduct } from '@/src/types/chat';
-import { ProductEnergyType } from '@/src/types/enum-types';
-import { ProductData } from '@/src/types/product';
+import { ProductData, ProductEnergyType } from '@/src/types/product';
 import { Rank, RankType } from '@/src/types/rank';
 import { useLocalSearchParams } from 'expo-router';
 import { useEffect, useRef } from 'react';
 import { FlatList } from 'react-native';
-import uuid from 'react-native-uuid';
 
 export default function Index() {
   const { id } = useLocalSearchParams<{ id?: string }>();
-  const { user, setUser, chosenPlan } = useStore();
+  const { chosenPlan } = useStore();
 
   const flatListRef = useRef<FlatList>(null);
 
@@ -24,12 +22,6 @@ export default function Index() {
         });
       }, 100);
   }, [id]);
-
-  useEffect(() => {
-    if (!user.id) {
-      setUser({ ...user, id: uuid.v4() });
-    }
-  }, [user]);
 
   return (
     <FlatList
@@ -65,12 +57,12 @@ export default function Index() {
         return <ProductStepCard data={data} />;
       }}
       ListHeaderComponent={() => (
-        <Box marginBottom='sp36'>
+        <Box marginBottom="sp36">
           <RankCard rank={Rank.getRankById(RankType.NB)!} />
         </Box>
       )}
       ListFooterComponent={() => (
-        <Box marginTop='sp36'>
+        <Box marginTop="sp36">
           <RankCard rank={Rank.getRankById(RankType.FE)!} />
         </Box>
       )}
@@ -78,14 +70,14 @@ export default function Index() {
         return props.leadingItem.step % 3 !== 0 ? (
           <Typography
             fontSize={40}
-            color='onSurfaceDisabled'
-            marginTop='sp8'
-            marginLeft='sp24'
+            color="onSurfaceDisabled"
+            marginTop="sp8"
+            marginLeft="sp24"
           >
             ⋮
           </Typography>
         ) : (
-          <Box marginVertical='sp36'>
+          <Box marginVertical="sp36">
             <RankCard rank={Rank.getRankById(RankType.SP)!} />
           </Box>
         );

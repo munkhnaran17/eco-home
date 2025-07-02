@@ -14,16 +14,16 @@ const Success = () => {
         params: { id: ((product?.id ?? 1) - 1).toString() },
       });
     }, 1000);
-  }, []);
+  }, [product?.id]);
 
   return (
-    <Box flex={1} justifyContent='center' alignItems='center'>
+    <Box flex={1} justifyContent="center" alignItems="center">
       <Seedling />
       <Typography
         fontSize={16}
         fontWeight={600}
-        textAlign='center'
-        marginTop='sp12'
+        textAlign="center"
+        marginTop="sp12"
       >
         {`Ногоон бүтээгдэхүүн \n сонгосонд баярлалаа.`}
       </Typography>
